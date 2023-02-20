@@ -1,0 +1,14 @@
+name: Main
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        subdir: [backend, frontend]
+    uses: allyusd/workflows/.github/workflows/docker-publish.yml@main
+    with:
+      subdir: ${{ matrix.subdir }}
