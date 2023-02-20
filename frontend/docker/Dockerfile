@@ -1,10 +1,11 @@
 FROM node:18-alpine as base
 
+# set up
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
@@ -12,16 +13,13 @@ RUN npm run build
 
 FROM node:18-alpine
 
-ENV NODE_ENV production
-
 WORKDIR /app
 
-COPY package*.json ./
+ENV NODE_ENV=production
 
-RUN npm ci --production
+COPY --from=base /app/next.config.js ./
+COPY --from=base /app/public ./public
+COPY --from=base /app/.next ./.next
+COPY --from=base /app/node_modules ./node_modules
 
-COPY --from=base /app/dist/ /app/dist/
-
-EXPOSE 8000
-
-CMD ["node", "dist/main"]
+CMD ["node_modules/.bin/next", "start"]
