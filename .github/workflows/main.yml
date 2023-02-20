@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        subdir: [serve, frontend]
+        subdir: [server, frontend]
     uses: ./.github/workflows/docker-publish.yml
     with:
       subdir: ${{ matrix.subdir }}
