@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        subdir: [backend, frontend]
-    uses: allyusd/workflows/.github/workflows/docker-publish.yml@main
+        subdir: [serve, frontend]
+    uses: ./.github/workflows/docker-publish.yml
     with:
       subdir: ${{ matrix.subdir }}
